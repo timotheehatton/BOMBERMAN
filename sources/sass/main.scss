@@ -1,0 +1,63 @@
+@import 'var';
+
+.map {
+  position: relative;
+  width: 750px;
+  height: 750px;
+
+  &--block {
+    float: left;
+    width: 50px;
+    height: 50px;
+    background: $groundblock;
+    background-size: contain;
+    image-rendering: pixelated;
+  }
+
+  &--border {
+    background: $borderblock;
+    background-size: contain;
+  }
+
+  &--unbreak {
+    background: $unbreakblock;
+    background-size: contain;
+  }
+
+  &--break {
+    background: $breakblock;
+    background-size: contain;
+  }
+
+  &--spawn {
+    background: $spawnblock;
+    background-size: contain;
+  }
+
+  &--perso {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background: $perso1;
+  }
+
+  &--perso_down {
+    background-position: 0 0;
+  }
+
+  &--perso_up {
+    background-position: 0 50%;
+  }
+
+  &--perso_left {
+    background-position: 0 25%;
+  }
+
+  &--perso_right {
+    background-position: 0 75%;
+  }
+
+  &--perso_die {
+    background-position: 0 100%;
+  }
+}

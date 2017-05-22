@@ -1,4 +1,5 @@
-severity: error
+
+severity: warning
 
 linters:
 
@@ -26,7 +27,8 @@ linters:
     prefix: _
 
   PropertySortOrder:
-    enabled: false
+    enabled: true
+    order: recess
 
   Nesting-depth:
     max-depth: 6
@@ -44,6 +46,14 @@ linters:
     enabled: true
     allow_single_line_rule_sets: false
 
+  NestingDepth:
+    max_depth: 6
+
+  Indentation:
+    enabled: false
+
   StringQuotes:
     enabled: true
-    style: double_quotes
+
+  SelectorDepth:
+    max_depth: 6
