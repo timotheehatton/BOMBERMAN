@@ -23,6 +23,14 @@
   .map--spawn {
     background: url("../img/tile_spawn.png");
     background-size: contain; }
+  .map--bonus-1 {
+    background: url("../img/bonus.png");
+    background-size: 300%;
+    background-position: center; }
+  .map--bonus-2 {
+    background: url("../img/bonus.png");
+    background-size: 300%;
+    background-position: right; }
   .map--perso {
     position: absolute;
     width: 50px;

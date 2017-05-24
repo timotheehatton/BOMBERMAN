@@ -34,6 +34,18 @@
     background-size: contain;
   }
 
+  &--bonus-1 {
+    background: $bonusblock;
+    background-size: 300%;
+    background-position: center;
+  }
+
+  &--bonus-2 {
+    background: $bonusblock;
+    background-size: 300%;
+    background-position: right;
+  }
+
   &--perso {
     position: absolute;
     width: 50px;

@@ -152,6 +152,30 @@ var Map = function () {
   }
 
   _createClass(Map, [{
+    key: 'createMap',
+    value: function createMap() {
+      var that = this;
+      for (var i = 0; i < that.size; i++) {
+        this.gameMap.push([]);
+        for (var j = 0; j < that.size; j++) {
+          this.gameMap[i].push({
+            x: i,
+            y: j,
+            breakable: null,
+            border: false,
+            empty: true,
+            bonus: null
+          });
+          var createDiv = document.createElement('div');
+          createDiv.classList.add('map--block');
+          createDiv.setAttribute('id', 'block' + i + j);
+          that.container.appendChild(createDiv);
+        }
+      }
+      that.setUnbreakable();
+      that.setBreakable();
+    }
+  }, {
     key: 'setUnbreakable',
     value: function setUnbreakable() {
       var that = this;
@@ -183,36 +207,34 @@ var Map = function () {
               {
                 that.gameMap[i][j].breakable = true;
                 that.gameMap[i][j].empty = false;
-                var unbreakBlock = document.querySelector('#block' + i + j);
-                unbreakBlock.classList.add('map--break');
+                var breakBlock = document.querySelector('#block' + i + j);
+                breakBlock.classList.add('map--break');
               }
           }
         }
       }
     }
   }, {
-    key: 'createMap',
-    value: function createMap() {
+    key: 'setBonus',
+    value: function setBonus(numberBonus) {
       var that = this;
-      for (var i = 0; i < that.size; i++) {
-        this.gameMap.push([]);
-        for (var j = 0; j < that.size; j++) {
-          this.gameMap[i].push({
-            x: i,
-            y: j,
-            breakable: null,
-            border: false,
-            empty: true,
-            bonus: null
-          });
-          var createDiv = document.createElement('div');
-          createDiv.classList.add('map--block');
-          createDiv.setAttribute('id', 'block' + i + j);
-          that.container.appendChild(createDiv);
+      for (var i = 1; i < that.gameMap.length - 1; i++) {
+        for (var j = 1; j < that.gameMap[i].length - 1; j++) {
+          if (that.gameMap[i][j].breakable === true) {
+            var rand = Math.random();
+            if (rand <= 0.5 && numberBonus > 0) {
+              that.gameMap[i][j].bonus = 1;
+              var bonus = document.querySelector('#block' + i + j);
+              bonus.classList.add('map--bonus-1');
+            } else if (numberBonus > 0) {
+              that.gameMap[i][j].bonus = 2;
+              var _bonus = document.querySelector('#block' + i + j);
+              _bonus.classList.add('map--bonus-2');
+            }
+            numberBonus--;
+          }
         }
       }
-      that.setUnbreakable();
-      that.setBreakable();
     }
   }]);
 
@@ -221,6 +243,7 @@ var Map = function () {
 
 var createMap = new Map(15);
 createMap.createMap();
+createMap.setBonus(6);
 var exportMap = createMap.gameMap;
 var exportMapSize = createMap.size;
 exports.exportMap = exportMap;
