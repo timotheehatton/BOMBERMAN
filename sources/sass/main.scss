@@ -10,12 +10,40 @@
   // image-rendering: pixelated;
 }
 
+.bonus {
+  margin-top: 20px;
+  width: 750px;
+  margin: 0 auto;
+  font-family: montserrat, sans-serif;
+  font-weight: bold;
+  &--item {
+    &--1 {
+      margin-right: 10px;
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      background: $bonusblock;
+      background-size: 300%;
+      background-position: right;
+    }
+    &--2 {
+      margin-right: 10px;
+      margin-left: 100px;
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      background: $bonusblock;
+      background-size: 300%;
+      background-position: center;
+    }
+  }
+}
+
 .map {
   position: relative;
   width: 750px;
   height: 750px;
-  margin: auto;
-  margin-top: 6%;
+  margin: 20px auto 0 auto;
   box-shadow: 0 0 5px 3px #656565;
 
   &--block {
@@ -38,8 +66,9 @@
   }
 
   &--break {
-    background: $breakblock;
-    background-size: contain;
+    background: $breakblock !important;
+    background-size: contain !important;
+    background-position: center !important;
   }
 
   &--spawn {

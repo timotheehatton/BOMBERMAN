@@ -5,12 +5,35 @@
   width: 875px;
   height: 850px; }
 
+.bonus {
+  margin-top: 20px;
+  width: 750px;
+  margin: 0 auto;
+  font-family: montserrat, sans-serif;
+  font-weight: bold; }
+  .bonus--item--1 {
+    margin-right: 10px;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: url("../img/bonus.png");
+    background-size: 300%;
+    background-position: right; }
+  .bonus--item--2 {
+    margin-right: 10px;
+    margin-left: 100px;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: url("../img/bonus.png");
+    background-size: 300%;
+    background-position: center; }
+
 .map {
   position: relative;
   width: 750px;
   height: 750px;
-  margin: auto;
-  margin-top: 6%;
+  margin: 20px auto 0 auto;
   box-shadow: 0 0 5px 3px #656565; }
   .map--block {
     float: left;
@@ -28,8 +51,9 @@
     background: url("../img/ground/unbreak.png");
     background-size: contain; }
   .map--break {
-    background: url("../img/ground/break.png");
-    background-size: contain; }
+    background: url("../img/ground/break.png") !important;
+    background-size: contain !important;
+    background-position: center !important; }
   .map--spawn {
     background: url("../img/tile_spawn.png");
     background-size: contain; }

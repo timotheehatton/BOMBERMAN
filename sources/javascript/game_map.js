@@ -7,6 +7,32 @@ class Map
     this.gameMap = []
   }
 
+  createMap()
+  {
+    let that = this
+    for (var i = 0; i < that.size; i++)
+    {
+      this.gameMap.push([])
+      for (var j = 0; j < that.size; j++)
+      {
+        this.gameMap[i].push({
+          x: i,
+          y: j,
+          breakable: null,
+          border: false,
+          empty: true,
+          bonus: null,
+        })
+        let createDiv = document.createElement('div')
+        createDiv.classList.add('map--block')
+        createDiv.setAttribute('id', 'block'+ i + j)
+        that.container.appendChild(createDiv)
+      }
+    }
+    that.setUnbreakable()
+    that.setBreakable()
+  }
+
   setUnbreakable()
   {
     let that = this
@@ -48,7 +74,7 @@ class Map
         else if (that.gameMap[i][j].breakable === null)
         {
           let rand = Math.random()
-          if(rand < 0.5)//0.6
+          if(rand < 0.6)//0.6
           {
             that.gameMap[i][j].breakable = true
             that.gameMap[i][j].empty = false
@@ -60,62 +86,35 @@ class Map
     }
   }
 
-  setBonus(numberBonus)
+  setBonus()
   {
     let that = this
-    for (let i = 1; i < that.gameMap.length - 1; i++)
+    for (let i = 0; i < that.gameMap.length - 1; i++)
     {
-      for (let j = 1; j < that.gameMap[i].length - 1; j++)
+      for (let j = 0; j < that.gameMap[i].length - 1; j++)
       {
-        if (that.gameMap[i][j].breakable === true)
+        if (that.gameMap[i][j].breakable === true || that.gameMap[i][j].empty === true)
         {
           let rand = Math.random()
-          if (rand <= 0.5 && numberBonus > 0) {
+          if (rand <= 0.03) {
             that.gameMap[i][j].bonus = 1
             let bonus = document.querySelector('#block'+ i + j)
             bonus.classList.add('map--bonus-1')
           }
-          else if (numberBonus > 0) {
+          else if (rand <= 0.06) {
             that.gameMap[i][j].bonus = 2
             let bonus = document.querySelector('#block'+ i + j)
             bonus.classList.add('map--bonus-2')
           }
-          numberBonus--
         }
       }
     }
-  }
-
-  createMap()
-  {
-    let that = this
-    for (var i = 0; i < that.size; i++)
-    {
-      this.gameMap.push([])
-      for (var j = 0; j < that.size; j++)
-      {
-        this.gameMap[i].push({
-          x: i,
-          y: j,
-          breakable: null,
-          border: false,
-          empty: true,
-          bonus: null,
-        })
-        let createDiv = document.createElement('div')
-        createDiv.classList.add('map--block')
-        createDiv.setAttribute('id', 'block'+ i + j)
-        that.container.appendChild(createDiv)
-      }
-    }
-    that.setUnbreakable()
-    that.setBreakable()
   }
 }
 
 const createMap = new Map(15)
 createMap.createMap()
-createMap.setBonus(6)
+createMap.setBonus()
 var exportMap = createMap.gameMap
 var exportMapSize = createMap.size
 export {exportMap, exportMapSize}

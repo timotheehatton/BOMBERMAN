@@ -244,9 +244,8 @@ var Player = function () {
         name: that.name,
         x: that.posX,
         y: that.posY,
-        speedBonus: 0,
         BombPower: 2,
-        BombNumber: 0,
+        BombNumber: 1,
         healthNumber: that.lives,
         direction: this.startDirection
       });
@@ -278,8 +277,8 @@ var Player = function () {
     value: function movesPerso() {
       var that = this;
       var nextPos;
+      var bombEngage = 0;
       window.addEventListener('keydown', function (e) {
-        e.preventDefault();
         if (e.keyCode === that.key[0]) {
           //up
           var persoDiv = document.querySelector('#' + that.name);
@@ -292,6 +291,7 @@ var Player = function () {
               that.updateDirection();
             }
           }
+          e.preventDefault();
         } else if (e.keyCode === that.key[1]) {
           //right
           var _persoDiv = document.querySelector('#' + that.name);
@@ -304,6 +304,7 @@ var Player = function () {
               that.updateDirection();
             }
           }
+          e.preventDefault();
         } else if (e.keyCode === that.key[3]) {
           //left
           var _persoDiv2 = document.querySelector('#' + that.name);
@@ -316,6 +317,7 @@ var Player = function () {
               that.updateDirection();
             }
           }
+          e.preventDefault();
         } else if (e.keyCode === that.key[2]) {
           //down
           var _persoDiv3 = document.querySelector('#' + that.name);
@@ -328,11 +330,33 @@ var Player = function () {
               that.updateDirection();
             }
           }
+          e.preventDefault();
         } else if (e.keyCode === that.key[4]) {
           var bombX = playerStatus[0].x;
           var bombY = playerStatus[0].y;
-          var bomb = new _game_bomb2.default(0, bombX, bombY, playerStatus[0].BombPower);
-          bomb.create();
+          if (bombEngage < playerStatus[0].BombNumber) {
+            var bomb = new _game_bomb2.default(0, bombX, bombY, playerStatus[0].BombPower);
+            bomb.create();
+            bombEngage++;
+            setTimeout(function () {
+              bombEngage--;
+            }, 2000);
+          }
+          e.preventDefault();
+        }
+
+        if (_game_map.exportMap[playerStatus[0].y][playerStatus[0].x].bonus === 1) {
+          playerStatus[0].BombNumber++;
+          _game_map.exportMap[playerStatus[0].y][playerStatus[0].x].bonus = null;
+          var bonus = document.querySelector('#block' + playerStatus[0].y + playerStatus[0].x);
+          bonus.classList.remove('map--bonus-1');
+          document.querySelector('.bonus--item--2--value').textContent = playerStatus[0].BombNumber;
+        } else if (_game_map.exportMap[playerStatus[0].y][playerStatus[0].x].bonus === 2) {
+          playerStatus[0].BombPower++;
+          _game_map.exportMap[playerStatus[0].y][playerStatus[0].x].bonus = null;
+          var _bonus = document.querySelector('#block' + playerStatus[0].y + playerStatus[0].x);
+          _bonus.classList.remove('map--bonus-2');
+          document.querySelector('.bonus--item--1--value').textContent = playerStatus[0].BombPower;
         }
       });
     }
@@ -482,9 +506,6 @@ var Ia = function () {
       var persoDiv = document.querySelector('#' + _game_characters2.default[1].name);
       persoDiv.style.left = posX * 50 + 'px';
       persoDiv.style.top = posY * 50 + 'px';
-      console.log(posX);
-      console.log(posY);
-      console.log('------------------');
     }
   }, {
     key: 'movesPerso',
@@ -533,6 +554,30 @@ var Map = function () {
   }
 
   _createClass(Map, [{
+    key: 'createMap',
+    value: function createMap() {
+      var that = this;
+      for (var i = 0; i < that.size; i++) {
+        this.gameMap.push([]);
+        for (var j = 0; j < that.size; j++) {
+          this.gameMap[i].push({
+            x: i,
+            y: j,
+            breakable: null,
+            border: false,
+            empty: true,
+            bonus: null
+          });
+          var createDiv = document.createElement('div');
+          createDiv.classList.add('map--block');
+          createDiv.setAttribute('id', 'block' + i + j);
+          that.container.appendChild(createDiv);
+        }
+      }
+      that.setUnbreakable();
+      that.setBreakable();
+    }
+  }, {
     key: 'setUnbreakable',
     value: function setUnbreakable() {
       var that = this;
@@ -560,7 +605,7 @@ var Map = function () {
             that.gameMap[i][j].breakable = null;
           } else if (that.gameMap[i][j].breakable === null) {
             var rand = Math.random();
-            if (rand < 0.5) //0.6
+            if (rand < 0.6) //0.6
               {
                 that.gameMap[i][j].breakable = true;
                 that.gameMap[i][j].empty = false;
@@ -573,49 +618,24 @@ var Map = function () {
     }
   }, {
     key: 'setBonus',
-    value: function setBonus(numberBonus) {
+    value: function setBonus() {
       var that = this;
-      for (var i = 1; i < that.gameMap.length - 1; i++) {
-        for (var j = 1; j < that.gameMap[i].length - 1; j++) {
-          if (that.gameMap[i][j].breakable === true) {
+      for (var i = 0; i < that.gameMap.length - 1; i++) {
+        for (var j = 0; j < that.gameMap[i].length - 1; j++) {
+          if (that.gameMap[i][j].breakable === true || that.gameMap[i][j].empty === true) {
             var rand = Math.random();
-            if (rand <= 0.5 && numberBonus > 0) {
+            if (rand <= 0.03) {
               that.gameMap[i][j].bonus = 1;
               var bonus = document.querySelector('#block' + i + j);
               bonus.classList.add('map--bonus-1');
-            } else if (numberBonus > 0) {
+            } else if (rand <= 0.06) {
               that.gameMap[i][j].bonus = 2;
               var _bonus = document.querySelector('#block' + i + j);
               _bonus.classList.add('map--bonus-2');
             }
-            numberBonus--;
           }
         }
       }
-    }
-  }, {
-    key: 'createMap',
-    value: function createMap() {
-      var that = this;
-      for (var i = 0; i < that.size; i++) {
-        this.gameMap.push([]);
-        for (var j = 0; j < that.size; j++) {
-          this.gameMap[i].push({
-            x: i,
-            y: j,
-            breakable: null,
-            border: false,
-            empty: true,
-            bonus: null
-          });
-          var createDiv = document.createElement('div');
-          createDiv.classList.add('map--block');
-          createDiv.setAttribute('id', 'block' + i + j);
-          that.container.appendChild(createDiv);
-        }
-      }
-      that.setUnbreakable();
-      that.setBreakable();
     }
   }]);
 
@@ -624,7 +644,7 @@ var Map = function () {
 
 var createMap = new Map(15);
 createMap.createMap();
-createMap.setBonus(6);
+createMap.setBonus();
 var exportMap = createMap.gameMap;
 var exportMapSize = createMap.size;
 exports.exportMap = exportMap;

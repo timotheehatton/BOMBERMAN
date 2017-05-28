@@ -30,9 +30,8 @@ class Player
       name: that.name,
       x: that.posX,
       y: that.posY,
-      speedBonus: 0,
       BombPower: 2,
-      BombNumber: 0,
+      BombNumber: 1,
       healthNumber: that.lives,
       direction: this.startDirection,
     })
@@ -67,9 +66,9 @@ class Player
   {
     let that = this
     var nextPos
+    let bombEngage = 0
     window.addEventListener('keydown', function(e)
     {
-      e.preventDefault()
       if (e.keyCode === that.key[0])
       {
         //up
@@ -85,6 +84,7 @@ class Player
             that.updateDirection()
           }
         }
+        e.preventDefault()
       }
       else if (e.keyCode === that.key[1])
       {
@@ -101,6 +101,7 @@ class Player
             that.updateDirection()
           }
         }
+        e.preventDefault()
       }
       else if (e.keyCode === that.key[3])
       {
@@ -117,6 +118,7 @@ class Player
             that.updateDirection()
           }
         }
+        e.preventDefault()
       }
       else if (e.keyCode === that.key[2])
       {
@@ -133,13 +135,39 @@ class Player
             that.updateDirection()
           }
         }
+        e.preventDefault()
       }
       else if (e.keyCode === that.key[4])
       {
         let bombX = playerStatus[0].x
         let bombY = playerStatus[0].y
-        const bomb = new Bomb(0, bombX, bombY, playerStatus[0].BombPower)
-        bomb.create()
+        if (bombEngage < playerStatus[0].BombNumber) {
+          const bomb = new Bomb(0, bombX, bombY, playerStatus[0].BombPower)
+          bomb.create()
+          bombEngage++
+          setTimeout(function()
+          {
+            bombEngage--
+          }, 2000)
+        }
+        e.preventDefault()
+      }
+
+      if (exportMap[playerStatus[0].y][playerStatus[0].x].bonus === 1)
+      {
+        playerStatus[0].BombNumber++
+        exportMap[playerStatus[0].y][playerStatus[0].x].bonus = null
+        let bonus = document.querySelector('#block'+ playerStatus[0].y + playerStatus[0].x)
+        bonus.classList.remove('map--bonus-1')
+        document.querySelector('.bonus--item--2--value').textContent = playerStatus[0].BombNumber
+      }
+      else if (exportMap[playerStatus[0].y][playerStatus[0].x].bonus === 2)
+      {
+        playerStatus[0].BombPower++
+        exportMap[playerStatus[0].y][playerStatus[0].x].bonus = null
+        let bonus = document.querySelector('#block'+ playerStatus[0].y + playerStatus[0].x)
+        bonus.classList.remove('map--bonus-2')
+        document.querySelector('.bonus--item--1--value').textContent = playerStatus[0].BombPower
       }
     })
   }

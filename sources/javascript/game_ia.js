@@ -126,9 +126,6 @@ class Ia {
     let persoDiv = document.querySelector('#' + playerStatus[1].name)
     persoDiv.style.left = posX * 50 + 'px'
     persoDiv.style.top = posY * 50 + 'px'
-    console.log(posX)
-    console.log(posY)
-    console.log('------------------')
   }
   movesPerso(posX, posY)
   {
