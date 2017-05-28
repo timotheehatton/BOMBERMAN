@@ -15,6 +15,7 @@ let gulp         = require( 'gulp' ),
     watchify     = require( 'watchify' ),
     browserSync  = require( 'browser-sync' ).create(),
     autoprefixer = require( 'gulp-autoprefixer');
+    concat = require('gulp-concat');
 
 /**
  * Scripts bundle

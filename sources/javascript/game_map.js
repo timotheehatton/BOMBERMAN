@@ -7,32 +7,6 @@ class Map
     this.gameMap = []
   }
 
-  createMap()
-  {
-    let that = this
-    for (var i = 0; i < that.size; i++)
-    {
-      this.gameMap.push([])
-      for (var j = 0; j < that.size; j++)
-      {
-        this.gameMap[i].push({
-          x: i,
-          y: j,
-          breakable: null,
-          border: false,
-          empty: true,
-          bonus: null,
-        })
-        let createDiv = document.createElement('div')
-        createDiv.classList.add('map--block')
-        createDiv.setAttribute('id', 'block'+ i + j)
-        that.container.appendChild(createDiv)
-      }
-    }
-    that.setUnbreakable()
-    that.setBreakable()
-  }
-
   setUnbreakable()
   {
     let that = this
@@ -51,9 +25,9 @@ class Map
   setBreakable()
   {
     let that = this
-    for (let i = 0; i < that.gameMap.length; i++)
+    for (let i = 0; i < that.gameMap.length; i ++)
     {
-      for (let j = 0; j < that.gameMap[i].length; j++)
+      for (let j = 0; j < that.gameMap[i].length; j ++)
       {
         if
         ( (i === 0 && j === 0) ||
@@ -74,12 +48,12 @@ class Map
         else if (that.gameMap[i][j].breakable === null)
         {
           let rand = Math.random()
-          if(rand < 0.1)//0.6
+          if(rand < 0.5)//0.6
           {
             that.gameMap[i][j].breakable = true
             that.gameMap[i][j].empty = false
-            let breakBlock = document.querySelector('#block'+ i + j)
-            breakBlock.classList.add('map--break')
+            let unbreakBlock = document.querySelector('#block'+ i + j)
+            unbreakBlock.classList.add('map--break')
           }
         }
       }
@@ -110,6 +84,32 @@ class Map
         }
       }
     }
+  }
+
+  createMap()
+  {
+    let that = this
+    for (var i = 0; i < that.size; i++)
+    {
+      this.gameMap.push([])
+      for (var j = 0; j < that.size; j++)
+      {
+        this.gameMap[i].push({
+          x: i,
+          y: j,
+          breakable: null,
+          border: false,
+          empty: true,
+          bonus: null,
+        })
+        let createDiv = document.createElement('div')
+        createDiv.classList.add('map--block')
+        createDiv.setAttribute('id', 'block'+ i + j)
+        that.container.appendChild(createDiv)
+      }
+    }
+    that.setUnbreakable()
+    that.setBreakable()
   }
 }
 

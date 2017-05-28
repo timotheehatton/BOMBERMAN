@@ -1,4 +1,5 @@
 import {exportMap, exportMapSize} from './game_map.js';
+import Bomb from './game_bomb.js';
 
 var playerStatus = []
 
@@ -14,6 +15,7 @@ class Player
     this.div = document.querySelector('.map')
     this.key = []
     this.name = name
+    this.index = 0
   }
 
   create()
@@ -29,7 +31,7 @@ class Player
       x: that.posX,
       y: that.posY,
       speedBonus: 0,
-      BombPower: 0,
+      BombPower: 2,
       BombNumber: 0,
       healthNumber: that.lives,
       direction: this.startDirection,
@@ -40,13 +42,16 @@ class Player
       const perso1 = document.querySelector('#' + playerStatus[0].name)
       perso1.style.left = playerStatus[0].x + 'px'
       perso1.style.top  = playerStatus[0].y + 'px'
+      that.index = 0
     }
-    else if(that.name === 'player2')
+    else if(that.name === 'ia')
     {
       const perso2 = document.querySelector('#' + playerStatus[1].name)
-      perso2.style.right = playerStatus[1].x + 'px'
-      perso2.style.bottom  = playerStatus[1].y + 'px'
-
+      playerStatus[1].x = exportMapSize - 1
+      playerStatus[1].y = exportMapSize - 1
+      perso2.style.left = playerStatus[1].x * 50 + 'px'
+      perso2.style.top  = playerStatus[1].y * 50 + 'px'
+      that.index = 1
     }
   }
   updateDirection()
@@ -61,6 +66,7 @@ class Player
   movesPerso()
   {
     let that = this
+    var nextPos
     window.addEventListener('keydown', function(e)
     {
       e.preventDefault()
@@ -68,7 +74,7 @@ class Player
       {
         //up
         let persoDiv = document.querySelector('#' + that.name)
-        let nextPos = playerStatus[0].y -1
+        nextPos = playerStatus[0].y -1
         if(nextPos >= 0 )
         {
           if(exportMap[nextPos][playerStatus[0].x].empty)
@@ -84,10 +90,10 @@ class Player
       {
         //right
         let persoDiv = document.querySelector('#' + that.name)
-        let nextPos = playerStatus[0].x + 1
+        nextPos = playerStatus[0].x + 1
         if(nextPos <= exportMapSize )
         {
-          if(exportMap[nextPos][playerStatus[0].y].empty)
+          if(exportMap[playerStatus[0].y][nextPos].empty)
           {
             playerStatus[0].x += 1
             persoDiv.style.left = playerStatus[0].x * 50 + 'px'
@@ -100,10 +106,10 @@ class Player
       {
         //left
         let persoDiv = document.querySelector('#' + that.name)
-        let nextPos = playerStatus[0].x - 1
+        nextPos = playerStatus[0].x - 1
         if(nextPos >= 0 )
         {
-          if(exportMap[nextPos][playerStatus[0].y].empty)
+          if(exportMap[playerStatus[0].y][nextPos].empty)
           {
             playerStatus[0].x -= 1
             persoDiv.style.left = playerStatus[0].x * 50 + 'px'
@@ -116,7 +122,7 @@ class Player
       {
         //down
         let persoDiv = document.querySelector('#' + that.name)
-        let nextPos = playerStatus[0].y + 1
+        nextPos = playerStatus[0].y + 1
         if(nextPos <= exportMapSize)
         {
           if(exportMap[nextPos][playerStatus[0].x].empty)
@@ -128,14 +134,22 @@ class Player
           }
         }
       }
+      else if (e.keyCode === that.key[4])
+      {
+        let bombX = playerStatus[0].x
+        let bombY = playerStatus[0].y
+        const bomb = new Bomb(0, bombX, bombY, playerStatus[0].BombPower)
+        bomb.create()
+      }
     })
   }
 }
+export default playerStatus
 
 const player1 = new Player(3, 0, 0, 'player1', 'perso_down')
 player1.create()
 player1.key = [38, 39, 40, 37, 32]
 player1.movesPerso()
 
-const player2 = new Player(3, 0, 0, 'player2', 'perso_up')
+const player2 = new Player(3, 0, 0, 'ia', 'perso_up')
 player2.create()

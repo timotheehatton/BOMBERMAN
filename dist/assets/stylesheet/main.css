@@ -1,7 +1,17 @@
+.border {
+  position: fixed;
+  top: 100px;
+  left: 500px;
+  width: 875px;
+  height: 850px; }
+
 .map {
   position: relative;
   width: 750px;
-  height: 750px; }
+  height: 750px;
+  margin: auto;
+  margin-top: 6%;
+  box-shadow: 0 0 5px 3px #656565; }
   .map--block {
     float: left;
     width: 50px;
@@ -12,7 +22,7 @@
         image-rendering: -moz-crisp-edges;
         image-rendering: pixelated; }
   .map--border {
-    background: url("../img/ground/border.png");
+    background: url("../img/ground/borderB.png");
     background-size: contain; }
   .map--unbreak {
     background: url("../img/ground/unbreak.png");
@@ -35,16 +45,35 @@
     position: absolute;
     width: 50px;
     height: 50px;
-    background: url("../img/bombersprite.png"); }
+    background: url("../img/bombersprite.png");
+    -ms-interpolation-mode: nearest-neighbor;
+        image-rendering: -moz-crisp-edges;
+        image-rendering: pixelated; }
   .map--perso_down {
     background-position: 0 0; }
   .map--perso_up {
-    background-position: 0 50%; }
+    background-position: 0 17%; }
   .map--perso_left {
-    background-position: 0 25%; }
+    background-position: 0 8%; }
   .map--perso_right {
-    background-position: 0 75%; }
+    background-position: 0 25%; }
   .map--perso_die {
-    background-position: 0 100%; }
+    background-position: 0 75%; }
+  .map--bomb {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background: url("../img/bomb/bomb2.png");
+    background-size: contain;
+    -ms-interpolation-mode: nearest-neighbor;
+        image-rendering: -moz-crisp-edges;
+        image-rendering: pixelated; }
+  .map--bomb-range {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    opacity: 0.5; }
+    .map--bomb-range--active {
+      background: red; }
 
 /*# sourceMappingURL=main.css.map */

@@ -28,6 +28,8 @@
     "watchify": "^3.8.0"
   },
   "dependencies": {
-    "lethargy": "^1.0.4"
+    "gulp-concat": "^2.6.1",
+    "lethargy": "^1.0.4",
+    "scsslint": "0.0.3"
   }
 }
