@@ -91,7 +91,18 @@
     background-size: contain;
     -ms-interpolation-mode: nearest-neighbor;
         image-rendering: -moz-crisp-edges;
-        image-rendering: pixelated; }
+        image-rendering: pixelated;
+    animation-name: fadeOut;
+    animation-delay: 2.2s;
+    animation-duration: .1s;
+    opacity: 1;
+    animation-fill-mode: forwards; }
+
+@keyframes fadeOut {
+  from {
+    opacity: 1; }
+  to {
+    opacity: 0; } }
   .map--explosion {
     position: absolute;
     width: 50px;
