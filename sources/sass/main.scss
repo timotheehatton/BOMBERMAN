@@ -138,8 +138,9 @@
     position: absolute;
     width: 50px;
     height: 50px;
-    // background: red;
-    opacity: 0.5;
+    background: $explosion;
+    background-size: contain;
+    image-rendering: pixelated;
 
     &--active {
       background: red;

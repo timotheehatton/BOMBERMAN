@@ -48,7 +48,6 @@ var Bomb = function () {
     value: function setRange(posX, posY) {
       var that = this;
       var createDiv = document.createElement('div');
-      createDiv.classList.add('map--bomb-range');
       createDiv.style.left = posX * 50 + 'px';
       createDiv.style.top = posY * 50 + 'px';
       that.container.appendChild(createDiv);
@@ -56,6 +55,13 @@ var Bomb = function () {
         x: posX,
         y: posY
       });
+
+      setTimeout(function () {
+        createDiv.classList.add('map--bomb-range');
+        setTimeout(function () {
+          createDiv.classList.remove('map--bomb-range');
+        }, 200);
+      }, 2000);
     }
   }, {
     key: 'setbreakable',

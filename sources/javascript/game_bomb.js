@@ -34,7 +34,6 @@ class Bomb {
   {
     let that = this
     let createDiv = document.createElement('div')
-    createDiv.classList.add('map--bomb-range')
     createDiv.style.left = posX * 50 + 'px'
     createDiv.style.top = posY * 50 + 'px'
     that.container.appendChild(createDiv)
@@ -42,6 +41,15 @@ class Bomb {
       x : posX,
       y : posY,
     })
+
+    setTimeout(function()
+    {
+      createDiv.classList.add('map--bomb-range')
+      setTimeout(function()
+      {
+        createDiv.classList.remove('map--bomb-range')
+      },200)
+    },2000)
   }
 
   setbreakable(posX, posY)
@@ -215,7 +223,7 @@ class Bomb {
       console.log(that.posXNew);
       console.log(playerStatus[0].y);
       console.log(that.posYNew);
-      if (playerStatus[0].x === that.posXNew && playerStatus[0].y === that.posYNew ) {
+      if (playerStatus[0].x === that.posXNew && playerStatus[0].y === that.posYNew) {
         window.alert('You lost !')
         location.reload();
       }
