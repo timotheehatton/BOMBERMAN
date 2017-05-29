@@ -74,7 +74,7 @@ class Map
         else if (that.gameMap[i][j].breakable === null)
         {
           let rand = Math.random()
-          if(rand < 0.6)//0.6
+          if(rand < 0.6)
           {
             that.gameMap[i][j].breakable = true
             that.gameMap[i][j].empty = false

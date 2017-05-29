@@ -9,6 +9,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _game_map = require('./game_map.js');
 
+var _game_characters = require('./game_characters.js');
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var bombStatus = [];
@@ -164,9 +166,26 @@ var Bomb = function () {
           breakDiv.classList.remove('map--unbreak');
           _game_map.exportMap[y][x].empty = true;
           _game_map.exportMap[y][x].break = null;
-          document.querySelector('#bomb' + that.posXNew + that.posYNew).style.display = "none";
+          document.querySelector('#bomb' + that.posXNew + that.posYNew).classList.add('map--explosion');
+          setTimeout(function () {
+            document.querySelector('#bomb' + that.posXNew + that.posYNew).classList.remove('map--explosion');
+            document.querySelector('#bomb' + that.posXNew + that.posYNew).style.display = 'none';
+          }, 200);
         } else if (_game_map.exportMap[y][x].empty === true) {
-          document.querySelector('#bomb' + that.posXNew + that.posYNew).style.display = "none";
+          document.querySelector('#bomb' + that.posXNew + that.posYNew).classList.add('map--explosion');
+          setTimeout(function () {
+            document.querySelector('#bomb' + that.posXNew + that.posYNew).classList.remove('map--explosion');
+            document.querySelector('#bomb' + that.posXNew + that.posYNew).style.display = 'none';
+          }, 200);
+        }
+        console.log(_game_characters.playerStatus);
+        console.log(_game_characters.playerStatus[0].x);
+        console.log(that.posXNew);
+        console.log(_game_characters.playerStatus[0].y);
+        console.log(that.posYNew);
+        if (_game_characters.playerStatus[0].x === that.posXNew && _game_characters.playerStatus[0].y === that.posYNew) {
+          window.alert('You lost !');
+          location.reload();
         }
       }
     }
@@ -195,7 +214,7 @@ var Bomb = function () {
 
 exports.default = Bomb;
 
-},{"./game_map.js":4}],2:[function(require,module,exports){
+},{"./game_characters.js":2,"./game_map.js":4}],2:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -605,13 +624,12 @@ var Map = function () {
             that.gameMap[i][j].breakable = null;
           } else if (that.gameMap[i][j].breakable === null) {
             var rand = Math.random();
-            if (rand < 0.6) //0.6
-              {
-                that.gameMap[i][j].breakable = true;
-                that.gameMap[i][j].empty = false;
-                var unbreakBlock = document.querySelector('#block' + i + j);
-                unbreakBlock.classList.add('map--break');
-              }
+            if (rand < 0.6) {
+              that.gameMap[i][j].breakable = true;
+              that.gameMap[i][j].empty = false;
+              var unbreakBlock = document.querySelector('#block' + i + j);
+              unbreakBlock.classList.add('map--break');
+            }
           }
         }
       }

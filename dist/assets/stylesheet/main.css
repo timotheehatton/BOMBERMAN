@@ -87,7 +87,16 @@
     position: absolute;
     width: 50px;
     height: 50px;
-    background: url("../img/bomb/bomb2.png");
+    background: url("../img/bomb/bomb2.gif");
+    background-size: contain;
+    -ms-interpolation-mode: nearest-neighbor;
+        image-rendering: -moz-crisp-edges;
+        image-rendering: pixelated; }
+  .map--explosion {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background: url("../img/explosion_center.png");
     background-size: contain;
     -ms-interpolation-mode: nearest-neighbor;
         image-rendering: -moz-crisp-edges;
