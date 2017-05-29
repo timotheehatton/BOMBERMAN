@@ -115,7 +115,7 @@ class Ia {
     const bomb = new Bomb(0, bombX, bombY, playerStatus[1].BombPower)
     bomb.create()
     if(that.moveIa.length >= 2)
-      that.leavePerso(that.moveIa[that.moveIa.length - 3].x, that.moveIa[that.moveIa.length - 3].y)
+      that.leavePerso(that.moveIa[that.moveIa.length - 2].x, that.moveIa[that.moveIa.length - 2].y)
     else
       that.leavePerso(that.moveIa[that.moveIa.length - 1].x, that.moveIa[that.moveIa.length - 1].y)
     setTimeout(function(){ that.movesPerso(posX, posY)}, 2500);

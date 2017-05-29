@@ -11,6 +11,10 @@ var _game_map = require('./game_map.js');
 
 var _game_characters = require('./game_characters.js');
 
+var _game_characters2 = _interopRequireDefault(_game_characters);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var bombStatus = [];
@@ -184,12 +188,9 @@ var Bomb = function () {
             document.querySelector('#bomb' + that.posXNew + that.posYNew).style.display = 'none';
           }, 200);
         }
-        console.log(_game_characters.playerStatus);
-        console.log(_game_characters.playerStatus[0].x);
-        console.log(that.posXNew);
-        console.log(_game_characters.playerStatus[0].y);
-        console.log(that.posYNew);
-        if (_game_characters.playerStatus[0].x === that.posXNew && _game_characters.playerStatus[0].y === that.posYNew) {
+        console.log(_game_characters2.default[0].x);
+        console.log(that.posX);
+        if (_game_characters2.default[0].x === that.posXNew && _game_characters2.default[0].y === that.posYNew) {
           window.alert('You lost !');
           location.reload();
         }
@@ -520,7 +521,7 @@ var Ia = function () {
       var bombY = _game_characters2.default[1].y;
       var bomb = new _game_bomb2.default(0, bombX, bombY, _game_characters2.default[1].BombPower);
       bomb.create();
-      if (that.moveIa.length >= 2) that.leavePerso(that.moveIa[that.moveIa.length - 3].x, that.moveIa[that.moveIa.length - 3].y);else that.leavePerso(that.moveIa[that.moveIa.length - 1].x, that.moveIa[that.moveIa.length - 1].y);
+      if (that.moveIa.length >= 2) that.leavePerso(that.moveIa[that.moveIa.length - 2].x, that.moveIa[that.moveIa.length - 2].y);else that.leavePerso(that.moveIa[that.moveIa.length - 1].x, that.moveIa[that.moveIa.length - 1].y);
       setTimeout(function () {
         that.movesPerso(posX, posY);
       }, 2500);

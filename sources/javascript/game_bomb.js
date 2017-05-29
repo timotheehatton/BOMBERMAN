@@ -1,5 +1,5 @@
 import {exportMap, exportMapSize} from './game_map.js';
-import {playerStatus} from './game_characters.js';
+import playerStatus from './game_characters.js';
 
 var bombStatus =  []
 
@@ -218,11 +218,8 @@ class Bomb {
           document.querySelector('#bomb'+ that.posXNew + that.posYNew).style.display = 'none'
         },200)
       }
-      console.log(playerStatus);
       console.log(playerStatus[0].x);
-      console.log(that.posXNew);
-      console.log(playerStatus[0].y);
-      console.log(that.posYNew);
+      console.log(that.posX);
       if (playerStatus[0].x === that.posXNew && playerStatus[0].y === that.posYNew) {
         window.alert('You lost !')
         location.reload();
